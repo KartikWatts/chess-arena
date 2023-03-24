@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://chezzle.wattztech.in/chezzle'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -121,7 +121,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY','fjecr5ezzo2fil32gsc7sqpcvxh1zncc'),
 
     'cipher' => 'AES-256-CBC',
 
