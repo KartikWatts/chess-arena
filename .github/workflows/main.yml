@@ -3,8 +3,6 @@ name: 🚀 Main Workflow Action
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
   workflow_dispatch:
 
@@ -46,7 +44,7 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: 📂 Deploy files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_HOST}}
           username: ${{ secrets.FTP_USER }}
