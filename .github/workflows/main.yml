@@ -1,0 +1,56 @@
+name: 🚀 Main Workflow Action
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  web-deploy:
+    name: 🛠️ Test, Build & Deploy 🕉️
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔖 Get latest code
+        uses: actions/checkout@v3
+
+      - name: 🗿 Use PHPv8.2
+        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: "8.2"
+
+      - name: 🖇️ Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: 📦 Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: 🗝️ Generate key
+        run: php artisan key:generate
+
+      - name: 🔏 Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: 🗄️ Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: ☢️ Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: vendor/bin/phpunit
+
+      - name: 📂 Deploy files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST}}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          server-dir: /domains/chezzle.wattztech.in/chezzle/
+          exclude: |
+            **/.git*
+            **/.git*/**
