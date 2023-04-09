@@ -51,10 +51,10 @@ class PuzzleResource extends Resource
                 Tables\Columns\TextColumn::make('PuzzleId'),
                 Tables\Columns\TextColumn::make('FEN'),
                 Tables\Columns\TextColumn::make('Moves'),
-                Tables\Columns\TextColumn::make('Rating'),
+                Tables\Columns\TextColumn::make('Rating')->sortable(),
                 Tables\Columns\TextColumn::make('RatingDeviation'),
-                Tables\Columns\TextColumn::make('Popularity'),
-                Tables\Columns\TextColumn::make('NbPlays'),
+                Tables\Columns\TextColumn::make('Popularity')->sortable(),
+                Tables\Columns\TextColumn::make('NbPlays')->sortable(),
                 Tables\Columns\TextColumn::make('Themes'),
                 Tables\Columns\TextColumn::make('GameUrl'),
                 Tables\Columns\TextColumn::make('OpeningTags'),
@@ -70,14 +70,19 @@ class PuzzleResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [10, 25, 50, 100];
+    }
+
     public static function getPages(): array
     {
         return [
@@ -85,5 +90,5 @@ class PuzzleResource extends Resource
             'create' => Pages\CreatePuzzle::route('/create'),
             'edit' => Pages\EditPuzzle::route('/{record}/edit'),
         ];
-    }    
+    }
 }

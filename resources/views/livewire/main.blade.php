@@ -1,0 +1,3 @@
+<div>
+    <div id="board1" style="width: 400px"></div>
+</div>

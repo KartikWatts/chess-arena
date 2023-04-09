@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePuzzle extends CreateRecord
 {
     protected static string $resource = PuzzleResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
 }
