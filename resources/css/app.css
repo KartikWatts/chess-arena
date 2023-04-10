@@ -28,6 +28,18 @@ body {
     max-width: 800px;
 }
 
+.disable-actions {
+    pointer-events: none;
+    touch-action: none;
+}
+
+.highlight-white {
+    box-shadow: inset 0 0 3px 3px yellow;
+}
+.highlight-black {
+    box-shadow: inset 0 0 3px 3px blue;
+}
+
 @media only screen and (max-width: 1024px) {
     .board {
         width: 80%;
