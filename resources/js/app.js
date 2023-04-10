@@ -1,5 +1,7 @@
-import { Chess } from "chess.js";
 import "./bootstrap";
+import { Chess } from "chess.js";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 var board = null;
 var $board = $("#board");
@@ -69,9 +71,10 @@ function onDrop(source, target) {
         }
         console.log(move);
     } catch (error) {
+        console.log(error);
         return "snapback";
     }
-    updateStatus();
+    updateStatus(source, target);
 }
 
 function onMouseoverSquare(square, piece) {
@@ -111,7 +114,27 @@ function getStrippedPGN(pgnString) {
     return pgnString.replace(/\[[^\]]*\]/g, "");
 }
 
-function updateStatus() {
+function checkCorrectMove(sourceInput, targetInput) {
+    const [source, target, move] = getMoveForBoard(
+        moveOrder[solutionMoveIndex]
+    );
+    console.log(sourceInput, targetInput);
+    console.log(source, target);
+    if (source != sourceInput || target != targetInput) {
+        Toastify({
+            text: "Incorrect Move!",
+            duration: -1,
+            style: {
+                background: "red",
+            },
+        }).showToast();
+        boardElement.classList.add("disable-actions");
+        return false;
+    }
+    return true;
+}
+
+function updateStatus(source, target) {
     var status = "";
 
     var moveColor = "White";
@@ -144,9 +167,16 @@ function updateStatus() {
     $pgn.html(getStrippedPGN(game.pgn()));
     console.log(game.ascii());
 
+    checkCorrectMove(source, target);
+
     solutionMoveIndex++;
-    if (solutionMoveIndex % 2 == 0)
-        boardElement.classList.toggle("disable-actions");
+    boardElement.classList.toggle("disable-actions");
+
+    if (solutionMoveIndex % 2 == 0) {
+        setTimeout(() => {
+            makeMoveBasedOnMoveIndex();
+        }, 300);
+    }
 }
 
 let config = {
@@ -188,15 +218,19 @@ const getMoveForBoard = (moveString) => {
     return [source, target, move];
 };
 
+const makeMoveBasedOnMoveIndex = () => {
+    const [source, target, move] = getMoveForBoard(
+        moveOrder[solutionMoveIndex]
+    );
+    board.move(move);
+    onDrop(source, target);
+};
+
 if (movesList) {
     moveOrder = movesList.value.split(" ");
     setTimeout(() => {
         game.load(startPositionFEN.value);
-        const [source, target, move] = getMoveForBoard(
-            moveOrder[solutionMoveIndex]
-        );
-        board.move(move);
-        onDrop(source, target);
+        makeMoveBasedOnMoveIndex();
     }, 1000);
 }
 
