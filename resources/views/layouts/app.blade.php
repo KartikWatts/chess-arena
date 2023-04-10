@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous">
     </script>
-    @vite(['resources/js/chessboard-1.0.0.min.js', 'resources/js/app.js'])
+    @vite(['resources/js/chessboard-1.0.0.min.js', 'resources/js/chess.ts', 'resources/js/app.js'])
 </body>
 
 </html>
