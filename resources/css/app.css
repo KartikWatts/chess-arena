@@ -24,11 +24,18 @@ body {
 }
 
 .board {
-    width: 450px;
+    width: 60%;
+    max-width: 800px;
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 1024px) {
     .board {
-        transform: scale(0.65);
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .board {
+        width: 100%;
     }
 }
