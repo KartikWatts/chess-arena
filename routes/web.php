@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Livewire\Main;
+// use App\Http\Livewire\Puzzle\Puzzle;
+use App\Http\Livewire\Puzzle\QuickSolve;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Main::class);
+// Route::get('/puzzle', Puzzle::class);
+Route::get('/puzzle/quick-solve', QuickSolve::class)->name('test');
