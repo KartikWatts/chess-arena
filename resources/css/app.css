@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+        sans-serif;
+}
+
+body {
+    background: #141e30; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to right,
+        #243b55,
+        #141e30
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #243b55,
+        #141e30
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: white;
+    overscroll-behavior: contain; /* ************Prevent View From Relaod on Mobile Browser*************** */
+}
+
+.board {
+    width: 60%;
+    max-width: 760px;
+}
+
+.app-main-content {
+    position: absolute;
+    transform: translateY(30px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5;
+}
+
+.solve-now-btn {
+    max-width: 400px;
+    text-align: center;
+}
+
+.beta-release-caution {
+    max-width: 600px;
+}
+
+.disable-actions {
+    pointer-events: none;
+    touch-action: none;
+}
+
+.highlight-white {
+    box-shadow: inset 0 0 3px 3px yellow;
+}
+.highlight-black {
+    box-shadow: inset 0 0 3px 3px blue;
+}
+
+.display-active {
+    display: flex !important;
+    z-index: 10;
+}
+
+.display-inactive {
+    display: none !important;
+    z-index: 1;
+}
+
+.app-bar-container {
+    position: absolute;
+    height: 80vh;
+    width: 80vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-bar {
+    display: flex;
+    gap: 20px;
+}
+
+.app-bar div {
+    font-size: 20px;
+    padding: 10px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.app-bar-retry-btn {
+    background: #00b700;
+}
+
+.app-bar-new-btn {
+    background: #4040ff;
+}
+
+.app-bar div:hover {
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05, 1.05);
+}
+
+@media only screen and (max-width: 1024px) {
+    .board {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .board {
+        width: 100%;
+    }
+    .app-main-content {
+        transform: translateY(150px);
+    }
+    .beta-release-caution {
+        transform: translateY(100px);
+        max-width: 350px;
+    }
+}
