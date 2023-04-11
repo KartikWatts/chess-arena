@@ -39,6 +39,7 @@ var $appBar = $("#app-bar");
 var $appBarContainer = $("#app-bar-container");
 var $retryBtn = $("#app-bar-retry-btn");
 var $newBtn = $("#app-bar-new-btn");
+var $confettiContainer = $("#confetti-container-box");
 
 $newBtn.click(() => {
     clickSound.play();
@@ -279,6 +280,7 @@ const makeMoveBasedOnMoveIndex = () => {
         boardElement.classList.add("disable-actions");
         setTimeout(() => {
             $appBarContainer.toggleClass("display-active display-inactive");
+            $confettiContainer.toggleClass("display-inactive");
             $retryBtn.addClass("display-inactive");
         }, 500);
         return;

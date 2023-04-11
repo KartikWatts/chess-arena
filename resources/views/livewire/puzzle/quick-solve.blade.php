@@ -7,6 +7,7 @@
     <h1 class="text-xl md:text-3xl"><span class="font-bold">Solve Puzzle</span> <span id="moveColor"></span> </h1>
     <div id="board" class="board disable-actions">
     </div>
+    @include('common.confetti')
     <div class="bg-slate-900 rounded-lg px-5 py-2">
         <label>PGN:</label>
         <span id="pgn"></span>

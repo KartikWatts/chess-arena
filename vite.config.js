@@ -11,6 +11,8 @@ export default defineConfig({
                 "resources/js/chessboard-1.0.0.min.js",
                 "resources/js/chess.ts",
                 "resources/js/quick-solve.js",
+                "resources/css/confetti.css",
+                "resources/js/confetti.js",
             ],
             refresh: true,
         }),
