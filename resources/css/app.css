@@ -24,11 +24,16 @@ body {
         #141e30
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color: white;
+    overscroll-behavior: contain; /* ************Prevent View From Relaod on Mobile Browser*************** */
 }
 
 .board {
     width: 60%;
     max-width: 800px;
+}
+
+.solve-now-btn {
+    position: absolute;
 }
 
 .disable-actions {
