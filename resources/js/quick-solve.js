@@ -7,6 +7,8 @@ var moveSound = new Audio();
 moveSound.src = "/sounds/move.mp3";
 var captureSound = new Audio();
 captureSound.src = "/sounds/capture.mp3";
+var errorSound = new Audio();
+errorSound.src = "/sounds/error.mp3";
 var notifySound = new Audio();
 notifySound.src = "/sounds/notify.mp3";
 var clickSound = new Audio();
@@ -96,6 +98,7 @@ function onDrop(source, target) {
             colorToHighlight = "black";
         }
     } catch (error) {
+        errorSound.play();
         console.log(error);
         return "snapback";
     }
@@ -150,14 +153,16 @@ function checkCorrectMove(sourceInput, targetInput) {
         moveOrder[solutionMoveIndex]
     );
     if (source != sourceInput || target != targetInput) {
-        failSound.play();
-        Toastify({
-            text: "Incorrect Move!",
-            duration: 2000,
-            style: {
-                background: "red",
-            },
-        }).showToast();
+        setTimeout(() => {
+            failSound.play();
+            Toastify({
+                text: "Incorrect Move!",
+                duration: 2000,
+                style: {
+                    background: "red",
+                },
+            }).showToast();
+        }, 250);
         boardElement.classList.add("disable-actions");
         setTimeout(() => {
             $appBarContainer.toggleClass("display-active display-inactive");
@@ -207,12 +212,12 @@ function updateStatus(source, target) {
         boardElement.classList.toggle("disable-actions");
 
         if (solutionMoveIndex % 2 == 0) {
-            Toastify({
-                text: "Correct Move!",
-                duration: 2000,
-            }).showToast();
-            notifySound.play();
             setTimeout(() => {
+                Toastify({
+                    text: "Correct Move!",
+                    duration: 2000,
+                }).showToast();
+                notifySound.play();
                 makeMoveBasedOnMoveIndex();
             }, 300);
         }
@@ -260,14 +265,17 @@ const getMoveForBoard = (moveString) => {
 
 const makeMoveBasedOnMoveIndex = () => {
     if (solutionMoveIndex == moveOrder.length) {
-        winSound.play();
-        Toastify({
-            text: "Puzzle Solved!",
-            duration: 2000,
-            style: {
-                background: "green",
-            },
-        }).showToast();
+        setTimeout(() => {
+            winSound.play();
+            Toastify({
+                text: "Puzzle Solved!",
+                duration: 2000,
+                style: {
+                    background: "green",
+                },
+            }).showToast();
+        }, 300);
+
         boardElement.classList.add("disable-actions");
         setTimeout(() => {
             $appBarContainer.toggleClass("display-active display-inactive");

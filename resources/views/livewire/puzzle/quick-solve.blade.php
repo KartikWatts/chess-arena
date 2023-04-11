@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-center gap-2 md:gap-4 my-10 mx-4">
+<div class="flex flex-col items-center justify-center gap-2 md:gap-4 mt-8 mx-4">
     <script>
         console.log({!! json_encode($puzzle) !!})
     </script>
