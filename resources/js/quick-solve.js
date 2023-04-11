@@ -157,7 +157,7 @@ function checkCorrectMove(sourceInput, targetInput) {
         setTimeout(() => {
             failSound.play();
             Toastify({
-                text: "Incorrect Move!",
+                text: "Incorrect Move ⚔️ ",
                 duration: 2000,
                 style: {
                     background: "red",
@@ -215,7 +215,7 @@ function updateStatus(source, target) {
         if (solutionMoveIndex % 2 == 0) {
             setTimeout(() => {
                 Toastify({
-                    text: "Correct Move!",
+                    text: "Correct Move 🌟",
                     duration: 2000,
                 }).showToast();
                 notifySound.play();
@@ -269,7 +269,7 @@ const makeMoveBasedOnMoveIndex = () => {
         setTimeout(() => {
             winSound.play();
             Toastify({
-                text: "Puzzle Solved!",
+                text: "Puzzle Solved ✨",
                 duration: 2000,
                 style: {
                     background: "green",
