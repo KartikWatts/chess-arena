@@ -25,6 +25,12 @@ var $appBarContainer = $("#app-bar-container");
 var $retryBtn = $("#app-bar-retry-btn");
 var $newBtn = $("#app-bar-new-btn");
 
+$newBtn.click(() => {
+    location.reload();
+});
+
+$retryBtn.toggleClass("display-inactive");
+
 let solutionMoveIndex = 0;
 let moveOrder;
 
@@ -237,6 +243,23 @@ const getMoveForBoard = (moveString) => {
 };
 
 const makeMoveBasedOnMoveIndex = () => {
+    console.log(moveOrder);
+    console.log(solutionMoveIndex);
+    if (solutionMoveIndex == moveOrder.length) {
+        Toastify({
+            text: "Puzzle Solved!",
+            duration: 2000,
+            style: {
+                background: "green",
+            },
+        }).showToast();
+        boardElement.classList.add("disable-actions");
+        setTimeout(() => {
+            $appBarContainer.toggleClass("display-active display-inactive");
+            $retryBtn.addClass("display-inactive");
+        }, 500);
+        return;
+    }
     const [source, target, move] = getMoveForBoard(
         moveOrder[solutionMoveIndex]
     );

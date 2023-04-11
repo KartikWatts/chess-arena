@@ -14,7 +14,7 @@
     <div id="app-bar-container" class="app-bar-container display-inactive">
         <div id="app-bar" class="app-bar">
             <div id="app-bar-retry-btn" class="app-bar-retry-btn">Retry</div>
-            {{-- <div id="app-bar-new-btn" class="app-bar-new-btn">New Puzzle</div> --}}
+            <div id="app-bar-new-btn" class="app-bar-new-btn">New Puzzle</div>
         </div>
     </div>
     {{ $slot }}
