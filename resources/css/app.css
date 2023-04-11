@@ -32,8 +32,22 @@ body {
     max-width: 800px;
 }
 
-.solve-now-btn {
+.app-main-content {
     position: absolute;
+    transform: translateY(30px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5;
+}
+
+.solve-now-btn {
+    max-width: 400px;
+    text-align: center;
+}
+
+.beta-release-caution {
+    max-width: 600px;
 }
 
 .disable-actions {
@@ -107,5 +121,12 @@ body {
 @media only screen and (max-width: 640px) {
     .board {
         width: 100%;
+    }
+    .app-main-content {
+        transform: translateY(150px);
+    }
+    .beta-release-caution {
+        transform: translateY(100px);
+        max-width: 350px;
     }
 }
