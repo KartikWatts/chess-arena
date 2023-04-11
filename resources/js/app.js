@@ -3,6 +3,19 @@ import { Chess } from "chess.js";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
+var moveSound = new Audio();
+moveSound.src = "/sounds/move.mp3";
+var captureSound = new Audio();
+captureSound.src = "/sounds/capture.mp3";
+var notifySound = new Audio();
+notifySound.src = "/sounds/notify.mp3";
+var clickSound = new Audio();
+clickSound.src = "/sounds/click.mp3";
+var failSound = new Audio();
+failSound.src = "/sounds/fail.mp3";
+var winSound = new Audio();
+winSound.src = "/sounds/win.mp3";
+
 var board = null;
 var $board = $("#board");
 var game = new Chess();
@@ -26,10 +39,9 @@ var $retryBtn = $("#app-bar-retry-btn");
 var $newBtn = $("#app-bar-new-btn");
 
 $newBtn.click(() => {
-    location.reload();
+    clickSound.play();
+    setTimeout(() => location.reload(), 200);
 });
-
-$retryBtn.toggleClass("display-inactive");
 
 let solutionMoveIndex = 0;
 let moveOrder;
@@ -60,7 +72,6 @@ function onDragStart(source, piece, position, orientation) {
 }
 
 function onDrop(source, target) {
-    console.log(source, target);
     if (source == target) return "snapback";
     // see if the move is legal
     try {
@@ -68,6 +79,11 @@ function onDrop(source, target) {
             from: source,
             to: target,
         });
+        if (move.flags.includes("c")) {
+            captureSound.play();
+        } else {
+            moveSound.play();
+        }
         if (move.color === "w") {
             $board.find("." + squareClass).removeClass("highlight-white");
             $board.find(".square-" + move.from).addClass("highlight-white");
@@ -79,7 +95,6 @@ function onDrop(source, target) {
             squareToHighlight = move.to;
             colorToHighlight = "black";
         }
-        console.log(move);
     } catch (error) {
         console.log(error);
         return "snapback";
@@ -125,6 +140,7 @@ function getStrippedPGN(pgnString) {
 }
 
 $retryBtn.click(() => {
+    clickSound.play();
     boardElement.classList.remove("disable-actions");
     $appBarContainer.toggleClass("display-active display-inactive");
 });
@@ -133,9 +149,8 @@ function checkCorrectMove(sourceInput, targetInput) {
     const [source, target, move] = getMoveForBoard(
         moveOrder[solutionMoveIndex]
     );
-    console.log(sourceInput, targetInput);
-    console.log(source, target);
     if (source != sourceInput || target != targetInput) {
+        failSound.play();
         Toastify({
             text: "Incorrect Move!",
             duration: 2000,
@@ -196,6 +211,7 @@ function updateStatus(source, target) {
                 text: "Correct Move!",
                 duration: 2000,
             }).showToast();
+            notifySound.play();
             setTimeout(() => {
                 makeMoveBasedOnMoveIndex();
             }, 300);
@@ -243,9 +259,8 @@ const getMoveForBoard = (moveString) => {
 };
 
 const makeMoveBasedOnMoveIndex = () => {
-    console.log(moveOrder);
-    console.log(solutionMoveIndex);
     if (solutionMoveIndex == moveOrder.length) {
+        winSound.play();
         Toastify({
             text: "Puzzle Solved!",
             duration: 2000,
@@ -264,7 +279,6 @@ const makeMoveBasedOnMoveIndex = () => {
         moveOrder[solutionMoveIndex]
     );
     board.move(move);
-    console.log("Solution: ", moveOrder[solutionMoveIndex + 1]);
     onDrop(source, target);
 };
 
