@@ -20,6 +20,10 @@ let movesColorElement = document.getElementById("moveColor");
 var $status = $("#status");
 var $fen = $("#fen");
 var $pgn = $("#pgn");
+var $appBar = $("#app-bar");
+var $appBarContainer = $("#app-bar-container");
+var $retryBtn = $("#app-bar-retry-btn");
+var $newBtn = $("#app-bar-new-btn");
 
 let solutionMoveIndex = 0;
 let moveOrder;
@@ -50,8 +54,8 @@ function onDragStart(source, piece, position, orientation) {
 }
 
 function onDrop(source, target) {
-    removeGreySquares();
-
+    console.log(source, target);
+    if (source == target) return "snapback";
     // see if the move is legal
     try {
         var move = game.move({
@@ -114,6 +118,11 @@ function getStrippedPGN(pgnString) {
     return pgnString.replace(/\[[^\]]*\]/g, "");
 }
 
+$retryBtn.click(() => {
+    boardElement.classList.remove("disable-actions");
+    $appBarContainer.toggleClass("display-active display-inactive");
+});
+
 function checkCorrectMove(sourceInput, targetInput) {
     const [source, target, move] = getMoveForBoard(
         moveOrder[solutionMoveIndex]
@@ -123,12 +132,17 @@ function checkCorrectMove(sourceInput, targetInput) {
     if (source != sourceInput || target != targetInput) {
         Toastify({
             text: "Incorrect Move!",
-            duration: -1,
+            duration: 2000,
             style: {
                 background: "red",
             },
         }).showToast();
         boardElement.classList.add("disable-actions");
+        setTimeout(() => {
+            $appBarContainer.toggleClass("display-active display-inactive");
+        }, 500);
+        game.undo();
+
         return false;
     }
     return true;
@@ -167,15 +181,19 @@ function updateStatus(source, target) {
     $pgn.html(getStrippedPGN(game.pgn()));
     console.log(game.ascii());
 
-    checkCorrectMove(source, target);
+    if (checkCorrectMove(source, target)) {
+        solutionMoveIndex++;
+        boardElement.classList.toggle("disable-actions");
 
-    solutionMoveIndex++;
-    boardElement.classList.toggle("disable-actions");
-
-    if (solutionMoveIndex % 2 == 0) {
-        setTimeout(() => {
-            makeMoveBasedOnMoveIndex();
-        }, 300);
+        if (solutionMoveIndex % 2 == 0) {
+            Toastify({
+                text: "Correct Move!",
+                duration: 2000,
+            }).showToast();
+            setTimeout(() => {
+                makeMoveBasedOnMoveIndex();
+            }, 300);
+        }
     }
 }
 
@@ -223,6 +241,7 @@ const makeMoveBasedOnMoveIndex = () => {
         moveOrder[solutionMoveIndex]
     );
     board.move(move);
+    console.log("Solution: ", moveOrder[solutionMoveIndex + 1]);
     onDrop(source, target);
 };
 
