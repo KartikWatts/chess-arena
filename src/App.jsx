@@ -1,5 +1,6 @@
 import { Chessboard } from "react-chessboard";
 import "./App.css";
+import { Link } from "react-router-dom";
 
 function App() {
   return (
@@ -25,16 +26,16 @@ function App() {
         />
       </div>
       <div className='app-main-content'>
-        <a href="{{ route('test') }}">
+        <Link to='quick-solve'>
           <div className='bg-slate-900 p-4 md:p-10 rounded-xl md:rounded-3xl text-xl md:text-4xl hover:bg-slate-800 hover:scale-110 motion-safe:animate-pulse solve-now-btn cursor-pointer'>
-            Solve Now
+            Quick Solve Now
           </div>
-        </a>
+        </Link>
         <div className='bg-slate-900 py-3 px-5 mt-5 rounded-md beta-release-caution'>
           The app is in beta mode, as it may still contain undiscovered bugs and
           unexpected behavior. I appreciate providing feedback on any issues
           encountered, so we can improve the app before its official release.
-          Contributions are dearly welcomed. Made with ❤️{" "}
+          Contributions are dearly welcomed. Made with ❤️
           <a href='https://github.com/KartikWatts/chess-arena' target='_blank'>
             https://github.com/KartikWatts/chess-arena
           </a>
