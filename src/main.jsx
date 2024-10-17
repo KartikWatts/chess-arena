@@ -6,17 +6,22 @@ import "./index.css";
 import ErrorPage from "./error-page.jsx";
 import { QuickSolve } from "./pages/quick-solve/QuickSolve.jsx";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/quick-solve",
+      element: <QuickSolve />,
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/quick-solve",
-    element: <QuickSolve />,
-  },
-]);
+    basename: "/chess-arena",
+  }
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
