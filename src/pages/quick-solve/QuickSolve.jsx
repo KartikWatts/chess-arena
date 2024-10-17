@@ -1,3 +1,3 @@
 export const QuickSolve = () => {
-  return <div>QuickSolve</div>;
+  return <div>QuickSolve (Will be live again soon)</div>;
 };
